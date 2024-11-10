@@ -10,6 +10,8 @@ public class Main {
 
         animais.add(new Cachorro());
         animais.add(new Leao());
+
+        //Aqui inserimos agora o adaptador criado
         animais.add(new DinossauroAdapter());
 
         animais.forEach(Animal::comer);
