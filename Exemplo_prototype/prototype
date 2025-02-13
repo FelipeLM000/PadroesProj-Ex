@@ -1,0 +1,80 @@
+import java.util.ArrayList;
+import java.util.List;
+
+interface Prototype extends Cloneable {
+    Prototype clone();
+}
+
+class Personagem implements Prototype {
+    private String nome;
+    private int nivel;
+    private List<String> habilidades;
+
+    public Personagem(String nome, int nivel, List<String> habilidades) {
+        this.nome = nome;
+        this.nivel = nivel;
+        this.habilidades = habilidades;
+    }
+
+    @Override
+    public Personagem clone() {
+        try {
+            Personagem clone = (Personagem) super.clone();
+            clone.habilidades = new ArrayList<>(this.habilidades);
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Erro ao clonar o personagem", e);
+        }
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public List<String> getHabilidades() {
+        return habilidades;
+    }
+
+    public void setHabilidades(List<String> habilidades) {
+        this.habilidades = habilidades;
+    }
+
+    @Override
+    public String toString() {
+        return "Personagem{" +
+                "nome='" + nome + '\'' +
+                ", nivel=" + nivel +
+                ", habilidades=" + habilidades +
+                '}';
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> habilidades = new ArrayList<>();
+        habilidades.add("Ataque básico");
+        habilidades.add("Defesa");
+        Personagem personagemOriginal = new Personagem("Guerreiro", 10, habilidades);
+
+        Personagem personagemClonado = personagemOriginal.clone();
+
+        personagemClonado.setNome("Mago");
+        personagemClonado.setNivel(5);
+        personagemClonado.getHabilidades().add("Bola de fogo");
+
+        System.out.println("Personagem Original: " + personagemOriginal);
+        System.out.println("Personagem Clonado: " + personagemClonado);
+    }
+}
